@@ -1,4 +1,4 @@
-# AuthApi
+# Start Template
 
 To start your Phoenix server:
 
