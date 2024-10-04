@@ -11,11 +11,10 @@ defmodule AuthApiWeb.UserController do
       {:ok, user} ->
         json(conn, %{message: "User created successfully", user: user})
       {:error, changeset} ->
-        # Hata durumunda, hata mesajlarını düzgün bir formatta döndür
         errors =
           changeset.errors
           |> Enum.map(fn {field, {msg, _}} -> {Atom.to_string(field), msg} end)
-          |> Enum.into(%{}) # Hataları bir harita (map) yapısına dönüştür
+          |> Enum.into(%{})
 
         conn
         |> put_status(:unprocessable_entity)

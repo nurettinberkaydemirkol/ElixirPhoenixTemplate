@@ -15,6 +15,7 @@ defmodule AuthApiWeb.Router do
     get "/user", SessionController, :current_user
 
     resources "/todos", TodoController, only: [:create, :index]
+    post "/todos/update", TodoController, :update_todos
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

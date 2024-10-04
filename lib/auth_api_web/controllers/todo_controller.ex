@@ -1,7 +1,6 @@
 defmodule AuthApiWeb.TodoController do
   use AuthApiWeb, :controller
-
-  alias AuthApi.Accounts
+  alias AuthApi.{Repo, Accounts}
 
   def create(conn, %{"title" => title, "description" => description}) do
     conn = fetch_session(conn)
@@ -9,6 +8,7 @@ defmodule AuthApiWeb.TodoController do
 
     case Accounts.create_todo(%{title: title, description: description, user_id: user_id}) do
       {:ok, todo} ->
+        todo = Repo.preload(todo, :user) # user ilişkisinin preload edilmesi
         conn
         |> put_status(:created)
         |> json(todo)

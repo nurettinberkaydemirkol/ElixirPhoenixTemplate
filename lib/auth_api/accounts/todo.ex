@@ -2,10 +2,11 @@ defmodule AuthApi.Accounts.Todo do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "todos" do  # Dikkat: "todo" değil "todos"
+  @derive {Jason.Encoder, only: [:title, :description, :completed, :inserted_at, :updated_at]} #eğer her işlemde user dönmesini istiyorsan :user ekle
+  schema "todos" do
     field :title, :string
     field :description, :string
-    field :completed, :boolean, default: false  # Boole olarak değiştirildi
+    field :completed, :boolean, default: false
     belongs_to :user, AuthApi.Accounts.User
 
     timestamps()

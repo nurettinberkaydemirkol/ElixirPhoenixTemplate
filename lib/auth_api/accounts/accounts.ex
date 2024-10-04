@@ -40,6 +40,10 @@ defmodule AuthApi.Accounts do
     |> Repo.insert()
   end
 
+  def list_todos(user_id) do
+    Repo.all(from t in Todo, where: t.user_id == ^user_id)
+  end
+
   def update_todo(todo, attrs) do
     todo
     |> Todo.changeset(attrs)
@@ -50,7 +54,4 @@ defmodule AuthApi.Accounts do
     Repo.delete(todo)
   end
 
-  def get_user_todos(user_id) do
-    Repo.all(from t in Todo, where: t.user_id == ^user_id)
-  end
 end

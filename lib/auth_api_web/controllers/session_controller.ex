@@ -4,12 +4,12 @@ defmodule AuthApiWeb.SessionController do
   alias AuthApi.Accounts
 
   def create(conn, %{"username" => username, "password" => password}) do
-    conn = fetch_session(conn)  # Oturumu fetch et
+    conn = fetch_session(conn)
 
     case Accounts.authenticate_user(username, password) do
       {:ok, user} ->
         conn
-        |> put_session(:user_id, user.id)  # Kullanıcı ID'sini oturumda tutuyoruz
+        |> put_session(:user_id, user.id)
         |> put_status(:ok)
         |> json(%{message: "Logged in successfully"})
 
@@ -22,11 +22,11 @@ defmodule AuthApiWeb.SessionController do
 
   # Mevcut kullanıcıyı almak için bir işlev
   def current_user(conn, _params) do
-    conn = fetch_session(conn)  # Burada da oturumu fetch etmelisiniz
+    conn = fetch_session(conn)
     user_id = get_session(conn, :user_id)
 
     if user_id do
-      user = Accounts.get_user!(user_id)  # Kullanıcıyı al
+      user = Accounts.get_user!(user_id)
       conn
       |> put_status(:ok)
       |> json(user)
